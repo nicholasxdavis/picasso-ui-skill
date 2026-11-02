@@ -1,0 +1,237 @@
+@import url('https://unpkg.com/normalize.css') layer(normalize);
+
+@layer normalize, base, prototype;
+
+@layer prototype {
+  ul {
+    --size: 4;
+    display: flex;
+    gap: .25rem;
+    list-style-type: none;
+    padding: 2rem calc(var(--size) * 1ch);
+    margin: 0;
+    max-width: 100%;
+    overflow: auto;
+    scrollbar-color: #0000 #0000;
+    scrollbar-width: none;
+    transform: translateZ(0);
+
+    mask-image: linear-gradient(90deg, #fff, #0000),
+      linear-gradient(90deg, #fff 0 100%), linear-gradient(90deg, #0000, #fff);
+    mask-size: calc(var(--size) * 1ch) 100%, 100% 100%,
+      calc(var(--size) * 1ch) 100%;
+    mask-repeat: no-repeat;
+    mask-composite: xor;
+    animation-timing-function: linear;
+    animation-timeline: scroll(self inline);
+    animation-range: 0 calc(var(--size) * 1ch),
+      calc(100% - (var(--size) * 1ch)) 100%;
+    mask-position: 0 0, 0 0, 100% 0;
+    mask-size: 0 100%, 100% 100%, calc(var(--size) * 1ch) 100%;
+    animation-name: size-up, size-down;
+    animation-fill-mode: both;
+  }
+
+  @keyframes size-up {
+    to {
+      mask-size: calc(var(--size) * 1ch) 100%, 100% 100%,
+        calc(var(--size) * 1ch) 100%;
+    }
+  }
+  @keyframes size-down {
+    to {
+      mask-size: calc(var(--size) * 1ch) 100%, 100% 100%, 0 100%;
+    }
+  }
+  body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    background: light-dark(#fff, #000);
+    overflow-x: hidden;
+  }
+
+  ul a {
+    text-decoration: none;
+    color: light-dark(#000, #fff);
+    display: inline-block;
+    padding: 0 0.25rem;
+
+    span {
+      transition: background 0.12s ease-out;
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      pointer-events: none;
+      display: inline-block;
+    }
+
+    &:is(:hover, :focus-visible) {
+      outline-color: light-dark(#000, #fff);
+    }
+
+    &:is(:hover, :focus-visible):not([data-active=true]) span {
+      background: light-dark(hsl(0 0% 80%), hsl(0 0% 30%));
+    }
+  }
+
+  .resize {
+    padding: 1rem;
+    resize: horizontal;
+    overflow: hidden;
+    width: 326px;
+  }
+
+  a[data-active=true] span {
+    anchor-name: --active;
+  }
+
+  ul {
+    background: light-dark(#fff, #000);
+    clip-path: inset(0);
+  }
+
+  ul::after {
+    content: '';
+    background: #fff;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    position: absolute;
+    z-index: 10;
+    top: anchor(top);
+    bottom: anchor(bottom);
+    left: anchor(left);
+    right: anchor(right);
+    position-anchor: --active;
+    transition: all 0.26s ease-out;
+    border-radius: 100px;
+
+  }
+}
+
+@layer base {
+  :root {
+    --font-size-min: 16;
+    --font-size-max: 20;
+    --font-ratio-min: 1.2;
+    --font-ratio-max: 1.33;
+    --font-width-min: 375;
+    --font-width-max: 1500;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light only;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark only;
+  }
+
+  :where(.fluid) {
+    --fluid-min: calc(
+      var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+    );
+    --fluid-max: calc(
+      var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+    );
+    --fluid-preferred: calc(
+      (var(--fluid-max) - var(--fluid-min)) /
+        (var(--font-width-max) - var(--font-width-min))
+    );
+    --fluid-type: clamp(
+      (var(--fluid-min) / 16) * 1rem,
+      ((var(--fluid-min) / 16) * 1rem) -
+        (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+        (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+      (var(--fluid-max) / 16) * 1rem
+    );
+    font-size: var(--fluid-type);
+  }
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: light-dark(#fff, #000);
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+      Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  body::before {
+    --size: 45px;
+    --line: color-mix(in hsl, canvasText, transparent 80%);
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: linear-gradient(
+          90deg,
+          var(--line) 1px,
+          transparent 1px var(--size)
+        )
+        calc(var(--size) * 0.36) 50% / var(--size) var(--size),
+      linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0%
+        calc(var(--size) * 0.32) / var(--size) var(--size);
+    mask: linear-gradient(-20deg, transparent 50%, white);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bear-link {
+    color: canvasText;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    opacity: 0.8;
+  }
+
+  :where(.x-link, .bear-link):is(:hover, :focus-visible) {
+    opacity: 1;
+  }
+
+  .bear-link svg {
+    width: 75%;
+  }
+
+  /* Utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+div.tp-dfwv {
+  width: 280px;
+}
+
+h1 {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-family: 'Geist Mono', monospace;
+  margin: 0;
+  font-size: 1.25rem;
+  opacity: .7;
+}

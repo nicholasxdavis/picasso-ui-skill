@@ -1,0 +1,221 @@
+@import 'normalize.css' layer(normalize);
+
+@layer normalize, base, demo;
+
+@layer demo {
+  @counter-style line-numbers {
+    system: extends decimal;
+    suffix: '  ';
+    pad: 2 ' ';
+  }
+
+  body { overflow: hidden; }
+
+  main {
+    position: relative;
+    width: min(720px, calc(100vw - 3rem));
+    overflow: visible;
+  }
+
+  .editor-frame {
+    --tab-left: 24px;
+    --tab-width: 148px;
+    --tab-height: 36px;
+    --curve: 12px;
+    --radius: 8px;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .editor-backdrop {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    filter:
+      drop-shadow(0 0 .75px rgb(255 255 255 / .72))
+      drop-shadow(0 22px 35px rgb(0 0 0 / .65));
+    pointer-events: none;
+  }
+
+  .editor-backdrop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #0d1117;
+    clip-path: shape(
+      from 0 calc(var(--tab-height) + var(--radius)),
+      arc to var(--radius) var(--tab-height) of var(--radius) cw,
+      hline to calc(var(--tab-left) - var(--curve)),
+      arc to var(--tab-left) calc(var(--tab-height) - var(--curve)) of var(--curve) ccw,
+      vline to var(--radius),
+      arc to calc(var(--tab-left) + var(--radius)) 0 of var(--radius) cw,
+      hline to calc(var(--tab-left) + var(--tab-width) - var(--radius)),
+      arc to calc(var(--tab-left) + var(--tab-width)) var(--radius) of var(--radius) cw,
+      vline to calc(var(--tab-height) - var(--curve)),
+      arc to calc(var(--tab-left) + var(--tab-width) + var(--curve)) var(--tab-height) of var(--curve) ccw,
+      hline to calc(100% - var(--radius)),
+      arc to 100% calc(var(--tab-height) + var(--radius)) of var(--radius) cw,
+      vline to calc(100% - var(--radius)),
+      arc to calc(100% - var(--radius)) 100% of var(--radius) cw,
+      hline to var(--radius),
+      arc to 0 calc(100% - var(--radius)) of var(--radius) cw,
+      vline to calc(var(--tab-height) + var(--radius)),
+      close
+    );
+  }
+
+  .editor-tab {
+    position: absolute;
+    top: 0;
+    left: var(--tab-left);
+    height: var(--tab-height);
+    width: var(--tab-width);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-inline: 13px;
+    color: #b5bac3;
+    font: 10px/1 'SFMono-Regular', Consolas, monospace;
+    pointer-events: none;
+  }
+
+  .editor-tab span {
+    color: #f1d45d;
+    font-size: 9px;
+  }
+
+  .code-host { padding-top: var(--tab-height); }
+
+  .code-host pre {
+    margin: 0;
+    min-width: max-content;
+    padding: 1.25rem 2.5rem 1.25rem 3.7rem !important;
+    background: transparent !important;
+    outline: none;
+    font: 400 12px/1.6 'SF Mono', 'Cascadia Code', 'Roboto Mono', ui-monospace, monospace;
+    letter-spacing: -.01em;
+    tab-size: 2;
+    caret-color: rgb(255 255 255 / .82);
+    caret-shape: block;
+  }
+
+  code {
+    counter-reset: line;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .line {
+    display: list-item;
+    min-height: 1.6em;
+    list-style: line-numbers;
+    list-style-position: outside;
+  }
+
+  .line::marker {
+    color: #62646c;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .character {
+    display: inline-block;
+    height: 100%;
+    user-select: text;
+    translate: 0 0;
+  }
+
+  [data-active='false'] .character {
+    transition: translate calc(var(--speed) * 1s) calc(var(--delay) * 1s);
+  }
+
+  [data-active='true'] .character {
+    cursor: grab;
+    user-select: none;
+  }
+
+  [data-active='true'] .character:active { cursor: grabbing; }
+
+  ::selection { color: #000; background: #fff; }
+
+  div.tp-dfwv {
+    position: fixed;
+    width: 256px;
+
+    .tp-rotv {
+      max-height: calc(100vh - 16px);
+      overflow: auto;
+    }
+  }
+}
+
+@layer base {
+  html { color-scheme: dark; }
+
+  *, *::after, *::before { box-sizing: border-box; }
+
+  body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #070707;
+    font-family: 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  body::before {
+    --size: 45px;
+    --line: color-mix(in hsl, canvasText, transparent 80%);
+    content: '';
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    background:
+      linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size))
+        calc(var(--size) * .36) 50% / var(--size) var(--size),
+      linear-gradient(var(--line) 1px, transparent 1px var(--size))
+        0% calc(var(--size) * .32) / var(--size) var(--size);
+    mask: linear-gradient(-20deg, transparent 50%, white);
+    pointer-events: none;
+  }
+
+  .brand-link {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    color: canvasText;
+    opacity: .8;
+  }
+
+  .brand-link:hover { opacity: 1; }
+
+  .craft-link .spinner { width: 24px; }
+
+  .gem__facet {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .gem__facet--top {
+    --spin-to: 360deg;
+    transform: scaleY(-1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gem__facet {
+      animation: gem-spin 30s infinite linear;
+      animation-composition: add;
+    }
+
+    .brand-link:is(:hover, :focus-visible) .gem__facet {
+      animation-duration: 1.2s;
+    }
+  }
+
+  @keyframes gem-spin {
+    to { rotate: var(--spin-to, -360deg); }
+  }
+}

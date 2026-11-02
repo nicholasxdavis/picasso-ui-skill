@@ -1,0 +1,202 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color: hsl(0 0% 90%);
+  --bg: hsl(0 0% 0%);
+  --text: linear-gradient(hsl(0 0% 100%), hsl(0 0% 60%));
+  --active-bg: hsl(0 0% 10%);
+  --active-outline: hsl(0 0% 25%);
+  --active-control: hsl(0 0% 25%);
+  --placeholder: hsl(0 0% 40%);
+  --outline: hsl(0 0% 20%);
+  --selection: hsl(0 0% 40%);
+}
+
+a {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 48px;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+}
+
+body {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background: var(--bg);
+}
+
+textarea {
+  field-sizing: content;
+  background: transparent;
+  padding: 1rem 0;
+  border: 0;
+  resize: none;
+  width: 100%;
+  outline: 1px solid transparent;
+  background: var(--text);
+  color: transparent;
+  background-clip: text;
+  caret-shape: underscore;
+  background-attachment: fixed;
+  caret-color: var(--color);
+  transition: all 0.2s;
+}
+
+.input-controls:is(:focus-within) {
+  background: var(--active-bg);
+  outline: 1px solid var(--active-outline);
+  box-shadow: 0 0.5px hsl(0 0% 100% / 1) inset;
+}
+
+textarea::placeholder {
+  color: var(--placeholder);
+}
+
+.input-controls::selection {
+  background: var(--selection);
+  color: var(--color);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(4, auto) 1fr;
+  gap: 0.25rem;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--placeholder);
+  aspect-ratio: 1;
+  width: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+button:last-of-type {
+  justify-self: end;
+  width: fit-content;
+  padding: 0 1rem;
+  height: auto;
+  aspect-ratio: auto;
+  font-weight: 600;
+}
+
+button svg {
+  width: 50%;
+}
+
+.input-controls {
+  width: 40ch;
+  border: 1px solid var(--outline);
+  transition: outline 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: 1px solid transparent;
+  box-shadow: 0 0.5px hsl(0 0% 100% / 0.75) inset;
+  font-weight: 300;
+  padding: 1rem;
+  position: absolute;
+  bottom: 50%;
+  border-radius: 0.25rem;
+  color: hsl(0 0% 92%);
+  translate: 0 2lh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+button:is(:hover, :focus-visible) {
+  background: var(--active-control);
+  color: var(--color);
+}
+
+a {
+  color: var(--outline);
+  transition: background 0.2s, color 0.2s;
+  display: grid;
+  place-items: center;
+}
+
+a svg {
+  width: 50%;
+  fill: currentColor;
+}
+
+a:is(:hover, :focus-visible) {
+  background: var(--active-bg);
+  color: var(--color);
+}
+
+.controls {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 2rem;
+  align-items: center;
+  justify-items: start;
+}
+
+[type=range]::-webkit-slider-runnable-track  {
+  background: linear-gradient(var(--outline), var(--outline)) 0 50% / 100% 4px no-repeat, transparent;
+  opacity: 1;
+}
+
+label {
+  color: var(--color);
+}
+
+[type=range] {
+  accent-color: hsl(0 0% 50%);
+  background: transparent;
+  appearance: none;
+}
+
+[type=checkbox] {
+  accent-color: hsl(0 0% 50%);
+}
+
+[type=checkbox]:not(:checked) ~ * {
+  opacity: 0.2;
+}
+
+[type=checkbox] ~ * {
+  transition: opacity 0.2s;
+}
+
+:root:has(#constrain:checked) textarea {
+  min-height: calc(var(--min) * 1lh);
+  max-height: calc(var(--max) * 1lh);
+}
+
+textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+textarea::-webkit-scrollbar-thumb {
+  background: hsl(0 0% 40%);
+  border-radius: 999px;
+}
+textarea::-webkit-scrollbar {
+  height: 8px;
+  width: 4px;
+  background: transparent;
+}

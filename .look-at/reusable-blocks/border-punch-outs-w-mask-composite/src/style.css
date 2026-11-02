@@ -1,0 +1,278 @@
+@import url('https://unpkg.com/normalize.css') layer(normalize);
+
+@layer normalize, base, demo;
+
+@layer demo {
+  :root {
+    --radius: 12;
+    --width: 50;
+    --height: 40;
+    --border: 4;
+    --blur: 10;
+    --alpha: 0;
+    --gradient: conic-gradient(from 180deg at 50% 70%,hsla(0,0%,98%,1) 0deg,#eec32d 72.0000010728836deg,#ec4b4b 144.0000021457672deg,#709ab9 216.00000858306885deg,#4dffbf 288.0000042915344deg,hsla(0,0%,98%,1) 1turn);
+    --x: 0,
+    --y: 0,
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  [data-exploded], [data-imploding] {
+    *, *::before, *::after {
+      transform-style: preserve-3d;    
+    }
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  .wrapper::after,
+  .wrapper::before {
+    position: absolute;
+    left: 130%;
+    top: 50%;
+    translate: 0 -50%;
+    font-size: 2rem;
+    color: hsl(0 0% 50%);
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  .wrapper::after {
+    content: "Masked Pseudo";
+  }
+  .wrapper::before {
+    content: "Element";
+  }
+
+  .obfuscated {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    font-size: clamp(3rem, 6vw + 1rem, 12rem);
+    font-weight: bold;
+    color: color-mix(in oklch, canvasText, canvas 10%);
+  }
+
+  @supports (background-clip: text) {
+    .obfuscated {
+      background: linear-gradient(hsl(0 0% 90%), hsl(0 0% 40%));
+      background-clip: text;
+      color: transparent;
+    }
+  }
+  .gradient-border {
+    width: calc(var(--width) * 1px);
+    height: calc(var(--height) * 1px);
+    background: color-mix(in oklch, light-dark(hsl(0 0% 94%), hsl(0 0% 6%)), #0000 calc(var(--bg-alpha, 0.2) * 100%));
+    border-radius: calc(var(--radius) * 1px);
+    position: relative;
+    border: 0;
+    translate: calc(var(--x) * 1%) calc(var(--y) * 1%);
+    transition: background 0.2s;
+  }
+  .gradient-border::after {
+    --bg-size: calc(100% + (2px * var(--border)));
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: var(--gradient) center center / var(--bg-size) var(--bg-size);
+    border-radius: calc(var(--radius) * 1px);
+    border: calc(var(--border) * 1px) solid transparent;
+    mask: linear-gradient(hsl(0 0% 100% / var(--alpha)), hsl(0 0% 100% / var(--alpha))), linear-gradient(#fff 0 100%);
+    mask-clip: padding-box, border-box;
+    mask-composite: intersect;
+  }
+
+  /* Transitions */
+  section {
+    transition: transform 1s 2s;
+  }
+
+  .obfuscated, .gradient-border::after {
+    transition: transform 0.5s 1s;
+  }
+
+  .gradient-border::before {
+    transition: outline-color 0.5s 1s;
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(calc(var(--blur) * 1px));
+    border-radius: calc(var(--radius) * 1px);
+    overflow: hidden;
+    translate: translate3d(0, 0, 0);
+    outline-width: 2px;
+    outline-style: dashed;
+    outline-color: #0000;
+  }
+
+  [data-exploded] section {
+    transform: translate3d(0, 0, 100vmin) rotateX(65deg) rotate(35deg);
+    transition: transform 1s 0.5s;
+  }
+  [data-exploded] .obfuscated {
+    transform: translate3d(0, 0, -150px);
+    transition: transform 1s 2s;
+  }
+
+  [data-exploded] .gradient-border::after {
+    transform: translate3d(0, 0, 150px);
+    transition: transform 1s 2s;
+  }
+  [data-exploded] .gradient-border::before {
+    outline-color: canvasText;
+    transition: outline-color 1s 2s;
+  }
+
+  .wrapper::after {
+    transform: translate3d(0, 0, 150px);
+  }
+
+  [data-exploded] .wrapper::after,
+  [data-exploded] .wrapper::before {
+    opacity: 1;
+    transition: opacity 1s 2.5s;
+  }
+
+  .wrapper::after,
+  .wrapper::before {
+    transition: opacity 1s 0s;
+  }
+
+  @layer {
+    .dg .c {
+      width: 50% !important;
+    }
+    .dg .property-name {
+      width: 50% !important;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .gradient-border {
+      --bg-alpha: 0.8;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --font-size-min: 16;
+    --font-size-max: 20;
+    --font-ratio-min: 1.2;
+    --font-ratio-max: 1.33;
+    --font-width-min: 375;
+    --font-width-max: 1500;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light only;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark only;
+  }
+
+  :where(.fluid) {
+    --fluid-min: calc(
+      var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+    );
+    --fluid-max: calc(
+      var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+    );
+    --fluid-preferred: calc(
+      (var(--fluid-max) - var(--fluid-min)) /
+        (var(--font-width-max) - var(--font-width-min))
+    );
+    --fluid-type: clamp(
+      (var(--fluid-min) / 16) * 1rem,
+      ((var(--fluid-min) / 16) * 1rem) -
+        (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+        (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+      (var(--fluid-max) / 16) * 1rem
+    );
+    font-size: var(--fluid-type);
+  }
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: light-dark(#fff, #000);
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+      Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  body::before {
+    --size: 45px;
+    --line: color-mix(in hsl, canvasText, transparent 80%);
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: linear-gradient(
+          90deg,
+          var(--line) 1px,
+          transparent 1px var(--size)
+        )
+        calc(var(--size) * 0.36) 50% / var(--size) var(--size),
+      linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0%
+        calc(var(--size) * 0.32) / var(--size) var(--size);
+    mask: linear-gradient(-20deg, transparent 50%, white);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bear-link {
+    color: canvasText;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    opacity: 0.8;
+  }
+
+  :where(.x-link, .bear-link):is(:hover, :focus-visible) {
+    opacity: 1;
+  }
+
+  .bear-link svg {
+    width: 75%;
+  }
+
+  /* Utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}

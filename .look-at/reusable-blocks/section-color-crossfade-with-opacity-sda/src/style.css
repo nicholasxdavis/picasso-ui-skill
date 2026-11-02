@@ -1,0 +1,282 @@
+/*
+  Section colour crossfade
+
+  Each section owns a fixed, full-screen colour layer. A scroll-driven
+  animation flips a flag on the section when its top crosses the entry line,
+  a style query turns the flag into opacity: 1 on its layer, and an opacity
+  transition does the fade. A small IntersectionObserver (script.js) marks the
+  current nav link and covers browsers without scroll-driven animations.
+*/
+
+/* The flag. Doesn't inherit, so the flip stays on the section. */
+@property --in {
+  syntax: '<number>';
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes enter {
+  to {
+    --in: 1;
+  }
+}
+
+:root {
+  color-scheme: light dark;
+  /* Fraction of the viewport, from the top, where the entry line sits */
+  --entry-line: 0.5;
+  --duration: 0.6s;
+  --ease: ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: Canvas;
+  color: CanvasText;
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  position: relative;
+  container-name: section;
+  min-height: calc(var(--h, 100) * 1vh);
+  display: grid;
+  /* minmax(0, …) so long code can't widen the page on phones */
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  --fill: light-dark(
+    oklch(0.91 0.075 var(--hue, 56)),
+    oklch(0.31 0.075 var(--hue, 56))
+  );
+}
+
+/*
+  The layer: fixed, full screen, behind everything. Layers paint in document
+  order, so a later section's layer covers an earlier one.
+*/
+.section__underlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--fill);
+  opacity: 0;
+  transition: opacity var(--duration) var(--ease);
+}
+
+/* The first section is always entered: no fade-in on load */
+.section:first-of-type .section__underlay {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  .section {
+    animation: enter step-end both;
+    /* Inset the bottom of the view so "entry" starts at the entry line */
+    animation-timeline: view(block 0 calc((1 - var(--entry-line)) * 100%));
+    animation-range: entry 0% entry 1px;
+  }
+
+  @container section style(--in: 1) {
+    .section__underlay {
+      opacity: 1;
+    }
+  }
+}
+
+/* No scroll-driven animations: script.js sets data-entered instead */
+@supports not (animation-timeline: view()) {
+  .section[data-entered] .section__underlay {
+    opacity: 1;
+  }
+}
+
+/* ---------- Nav ---------- */
+
+/*
+  The nav blends with whatever is behind it, so it needs no state for its
+  colour. The blend has to sit on the nav itself: a fixed nav with a z-index is
+  its own stacking context, so a blend on the links would only see the nav's
+  empty background.
+
+  Links dim with a weaker grey rather than opacity: WebKit speckles the glyph
+  edges of a translucent child under color-dodge. In light mode, color-burn
+  would be richer, but WebKit speckles under it too; multiply stays clean.
+*/
+.nav {
+  --ink: #a6a6a6;
+  --ink-dim: #7a7a7a;
+  --tick: 1.5rem;
+  /* A plain ratio: length ÷ length isn't on by default in Firefox */
+  --tick-rest: calc(1 / 3);
+
+  position: fixed;
+  left: clamp(0.75rem, 3vw, 2rem);
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 4rem);
+  overflow-y: auto;
+  scrollbar-width: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  mix-blend-mode: color-dodge;
+}
+
+@media (prefers-color-scheme: light) {
+  .nav {
+    --ink: #707070;
+    --ink-dim: #a0a0a0;
+    mix-blend-mode: multiply;
+  }
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0;
+  color: var(--ink-dim);
+  text-decoration: none;
+}
+
+/*
+  The current link is whichever carries aria-current. Everything that moves is
+  scale or translate, so the transitions stay on the compositor. The marker is
+  laid out at full size and scaled down, and the label slides over by the
+  width the marker gains.
+*/
+.nav a::before {
+  content: '';
+  flex: none;
+  width: var(--tick);
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: left center;
+  scale: var(--tick-rest) 1;
+  transition: scale var(--duration) var(--ease);
+}
+
+.nav__label {
+  translate: calc(var(--tick) * (var(--tick-rest) - 1)) 0;
+  transition: translate var(--duration) var(--ease);
+}
+
+.nav a[aria-current='true'] {
+  color: var(--ink);
+}
+
+.nav a[aria-current='true']::before {
+  scale: 1 1;
+}
+
+.nav a[aria-current='true'] .nav__label {
+  translate: 0 0;
+}
+
+.nav a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Narrow screens: the gutter only fits the markers */
+@media (width < 60rem) {
+  .nav__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ---------- Content ---------- */
+
+.section__content {
+  width: min(100% - 2rem, 68ch);
+  margin-inline: auto;
+  padding-block: clamp(4rem, 10vh, 8rem);
+}
+
+/* Leave the gutter to the nav's markers */
+@media (width < 48rem) {
+  .section__content {
+    width: min(100% - 5rem, 68ch);
+  }
+}
+
+.section__index {
+  display: block;
+  margin-bottom: 1rem;
+  font: 500 0.75rem/1 ui-monospace, 'SF Mono', Menlo, monospace;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+h1,
+h2 {
+  margin: 0 0 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.lede {
+  max-width: 44ch;
+  font-size: 1.25rem;
+}
+
+blockquote {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: color-mix(in oklch, CanvasText 8%, transparent);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+a {
+  color: inherit;
+}

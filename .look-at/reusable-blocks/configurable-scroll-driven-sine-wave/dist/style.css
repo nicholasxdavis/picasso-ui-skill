@@ -1,0 +1,367 @@
+@import url('https://unpkg.com/normalize.css') layer(normalize);
+
+@layer normalize, base, demo, motion, debug;
+
+@layer debug {
+  [data-debug='true'] li {
+    outline-color: red;
+  }
+}
+
+@layer motion {
+  @property --wave {
+    initial-value: 0;
+    syntax: '<number>';
+    inherits: true;
+  }
+  @property --progress {
+    initial-value: 0;
+    syntax: '<number>';
+    inherits: false;
+  }
+  section:nth-of-type(2) {
+    view-timeline: --section;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    view-timeline: --section;
+    gap: 0.2rem;
+  }
+
+  .item img {
+    animation: saturate both linear;
+    animation-timeline: --item;
+    animation-range: cover calc(50% - 240px) cover calc(50% + 240px);
+  }
+  @keyframes saturate {
+    50% {
+      filter: grayscale(0) contrast(1.2);
+    }
+  }
+  li {
+    position: relative;
+    view-timeline: --item;
+
+    .item {
+      --start: calc(var(--index, 0) * (360 / var(--count, 25)));
+      --progress: var(--p, 100);
+      top: 50%;
+      left: 50%;
+      padding: 0.2rem;
+      animation: strip both linear, wave both linear;
+      animation-timeline: --section, --item;
+      /* animation-range: cover; */
+      animation-range-start: cover, cover calc(var(--range-offset, 100) * -1%);
+      animation-range-end: cover,
+        cover calc((100 + var(--range-offset, 100)) * 1%);
+      position: fixed;
+      width: 240px;
+      z-index: 9999;
+      aspect-ratio: 1;
+      /*border: 2px solid white;*/
+      transform: translateY(
+        calc(
+          (
+              var(--offset, 0) +
+                (
+                  sin(
+                    (var(--start, 0) * 1deg) +
+                      (var(--wave, 0) * (var(--range, 360) * 1deg))
+                  )
+                )
+            ) * (var(--progress, 0) * 1%)
+        )
+      );
+    }
+  }
+}
+
+@keyframes strip {
+  from {
+    translate: calc((50% + 50vw) + (var(--index, 0) * 100%)) -50%;
+  }
+  to {
+    translate: calc(
+        (50% - 50vw) - ((var(--count, 25) + 1 - var(--index, 0)) * 100%)
+      ) -50%;
+  }
+}
+
+@keyframes wave {
+  100% {
+    --wave: var(--w, 2);
+  }
+}
+
+@layer demo {
+  main {
+    width: 100%;
+  }
+  footer {
+    padding: 2rem;
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+  section:first-of-type {
+    font-size: clamp(1rem, 3vw, 3rem);
+    font-weight: 300;
+    display: grid;
+    place-items: start;
+    padding: 4rem;
+    letter-spacing: -0.025em;
+    opacity: 0.8;
+    width: 100%;
+  }
+  section {
+    min-height: 100vh;
+  }
+  section:nth-of-type(2) {
+    display: grid;
+    place-items: center;
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    list-style-type: none;
+
+    li {
+      width: 240px;
+      aspect-ratio: 1;
+      outline: 2px dashed #0000;
+      transition: outline-color 0.26s ease-out;
+      container-type: size;
+    }
+
+    .item img {
+      width: 100%;
+      background: hsl(0 0% 60%);
+      height: 100%;
+      -o-object-fit: cover;
+         object-fit: cover;
+      border-radius: 4px;
+      filter: grayscale(1) contrast(1.2);
+    }
+
+    .sign {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.5rem;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      padding: 0.5rem;
+      border: 1px solid #fff;
+      border-radius: 4px;
+
+      h2,
+      .line {
+        margin: 0;
+        font-size: 14cqi;
+        letter-spacing: -0.025em;
+        line-height: 1;
+      }
+
+      .chars {
+        font-size: 8cqi;
+        display: inline-flex;
+        gap: 0.25rem;
+        span {
+          display: grid;
+          width: 2.5ch;
+          place-items: center;
+          aspect-ratio: 1;
+          background: var(--sign-color);
+          color: var(--sign-text);
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --font-size-min: 16;
+    --font-size-max: 20;
+    --font-ratio-min: 1.2;
+    --font-ratio-max: 1.33;
+    --font-width-min: 375;
+    --font-width-max: 1500;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light only;
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark only;
+  }
+
+  :where(.fluid) {
+    --fluid-min: calc(
+      var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+    );
+    --fluid-max: calc(
+      var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+    );
+    --fluid-preferred: calc(
+      (var(--fluid-max) - var(--fluid-min)) /
+        (var(--font-width-max) - var(--font-width-min))
+    );
+    --fluid-type: clamp(
+      (var(--fluid-min) / 16) * 1rem,
+      ((var(--fluid-min) / 16) * 1rem) -
+        (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+        (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+      (var(--fluid-max) / 16) * 1rem
+    );
+    font-size: var(--fluid-type);
+  }
+
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: light-dark(#fff, #000);
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+      Helvetica, Arial, sans-serif, system-ui;
+  }
+
+  body::before {
+    --size: 45px;
+    --line: color-mix(in hsl, canvasText, transparent 80%);
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: linear-gradient(
+          90deg,
+          var(--line) 1px,
+          transparent 1px var(--size)
+        )
+        calc(var(--size) * 0.36) 50% / var(--size) var(--size),
+      linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0%
+        calc(var(--size) * 0.32) / var(--size) var(--size);
+    -webkit-mask: linear-gradient(-20deg, transparent 50%, white);
+            mask: linear-gradient(-20deg, transparent 50%, white);
+    top: 0;
+    transform-style: flat;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bear-link {
+    color: canvasText;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    opacity: 0.8;
+  }
+
+  :where(.x-link, .bear-link):is(:hover, :focus-visible) {
+    opacity: 1;
+  }
+
+  .bear-link svg {
+    width: 75%;
+  }
+
+  /* Utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+div.tp-dfwv {
+  width: 256px;
+  position: fixed;
+  z-index: 999999 !important;
+}
+
+@layer gem {
+  .craft-link {
+    width: 40px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    translate: -1px -1px;
+    border-radius: 6px;
+    color: inherit;
+    position: fixed;
+    top: 1.25rem;
+    left: 1.25rem;
+
+    &:is(:hover, :focus-visible) .spinner {
+      opacity: 1;
+    }
+  }
+  .spinner {
+    width: 24px;
+    opacity: 0.5;
+    path {
+      stroke-width: 1px;
+    }
+  }
+
+  .gem__bottom {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .gem__bottom--top {
+    --to: 360deg;
+    --spin: 90deg;
+    transform: scaleY(-1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gem__bottom {
+      animation: spin 30s infinite linear;
+      animation-composition: add;
+    }
+
+    .craft-link:is(:hover, :focus-visible) .gem__bottom {
+      animation: spin 30s infinite linear,
+        spin-less 0.65s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+  }
+
+  @keyframes spin-less {
+    to {
+      rotate: var(--spin, -90deg);
+    }
+  }
+  @keyframes spin {
+    to {
+      rotate: var(--to, -360deg);
+    }
+  }
+}

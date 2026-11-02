@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Section Color Crossfade</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./script.js"></script>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Sections">
+      <a href="#intro"><span class="nav__label">Intro</span></a>
+      <a href="#layers"><span class="nav__label">Layers</span></a>
+      <a href="#flag"><span class="nav__label">Flag</span></a>
+      <a href="#quote"><span class="nav__label">Quote</span></a>
+      <a href="#blend"><span class="nav__label">Blend</span></a>
+      <a href="#current"><span class="nav__label">Current</span></a>
+      <a href="#short"><span class="nav__label">Short</span></a>
+      <a href="#fallback"><span class="nav__label">Fallback</span></a>
+      <a href="#tune"><span class="nav__label">Tune</span></a>
+      <a href="#end"><span class="nav__label">End</span></a>
+    </nav>
+
+    <main>
+      <section class="section" id="intro" style="--hue: 56; --h: 100">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">01</span>
+          <h1>Section colour crossfade</h1>
+          <p class="lede">
+            Scroll. Each section brings its own full-screen colour layer, which
+            fades in when the section's top crosses the middle of the screen.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="layers" style="--hue: 92; --h: 80">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">02</span>
+          <h2>Post it to the back</h2>
+          <p>
+            Every layer is <code>position: fixed</code> at
+            <code>z-index: -1</code>. They stack in document order, so a later
+            section's colour sits over an earlier one, and all of them sit
+            under the content. There's no z-index to juggle.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="flag" style="--hue: 128; --h: 160">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">03</span>
+          <h2>A flag, a query, a fade</h2>
+          <p>
+            A one-step scroll-driven animation flips <code>--in</code> on the
+            section when its top crosses the entry line. The property is
+            registered with <code>inherits: false</code>, so the flip stays on
+            the section.
+          </p>
+          <p>
+            <code>@container section style(--in: 1)</code> sets the layer's
+            <code>opacity</code> to 1. That comes from the cascade rather than
+            the animation, so an ordinary opacity transition runs, on the
+            compositor.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="quote" style="--hue: 164; --h: 60">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">04</span>
+          <blockquote>Scrolling decides when. A transition decides how.</blockquote>
+        </div>
+      </section>
+
+      <section class="section" id="blend" style="--hue: 200; --h: 200">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">05</span>
+          <h2>The nav blends</h2>
+          <p>
+            The nav uses <code>mix-blend-mode</code> against whatever is behind
+            it: <code>color-dodge</code> in dark mode, <code>multiply</code> in
+            light. It follows every fade without knowing which section is
+            showing, and it costs nothing extra while scrolling.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="current" style="--hue: 236; --h: 110">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">06</span>
+          <h2>The current link</h2>
+          <p>
+            A small IntersectionObserver marks the current link with
+            <code>aria-current</code>. The marker scales up and the label
+            slides over, so both move on the compositor.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="short" style="--hue: 272; --h: 70">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">07</span>
+          <h2>A short one.</h2>
+        </div>
+      </section>
+
+      <section class="section" id="fallback" style="--hue: 308; --h: 180">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">08</span>
+          <h2>No scroll-driven animations?</h2>
+          <p>
+            Then the same observer flips the layers as well, with a
+            <code>data-entered</code> attribute on each section that's past
+            the line. The fade is the same opacity transition.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="tune" style="--hue: 344; --h: 90">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">09</span>
+          <h2>Tune it</h2>
+          <p>
+            Move the entry line with <code>--entry-line</code> on
+            <code>:root</code>. The CSS and the observer both read it. Each
+            section's colour comes from its <code>--hue</code>.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="end" style="--hue: 20; --h: 140">
+        <div class="section__underlay" aria-hidden="true"></div>
+        <div class="section__content">
+          <span class="section__index">10</span>
+          <h2>That's the lot</h2>
+          <p><a href="#intro">Back to the top ↑</a></p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

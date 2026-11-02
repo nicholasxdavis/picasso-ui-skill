@@ -1,0 +1,171 @@
+<!doctype html>
+<!-- Downloaded from Unsection Blocks (https://www.unsection.com/blocks). Tailwind CSS is loaded from the Play CDN for instant preview only; in production, use your project's own Tailwind CSS v3 build. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Two-Column FAQ Accordion with Contact Card on a Color Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<section id="faq" aria-labelledby="faq-heading" class="bg-white p-3 font-sans sm:p-4">
+  <div class="mx-auto max-w-[1408px] rounded-[1.75rem] bg-lime-600 px-5 py-16 sm:rounded-[2.25rem] sm:px-10 sm:py-20 lg:px-16 lg:py-28">
+    <div class="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-12">
+
+      <!-- Left: header + contact CTA -->
+      <div class="lg:col-span-5 lg:sticky lg:top-10 lg:self-start">
+        <p class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-900">FAQ</p>
+        <h2 id="faq-heading" class="mt-5 font-serif text-[clamp(2.5rem,5.2vw,4.75rem)] font-normal leading-[1.02] tracking-tight text-slate-900">
+          Fleet charging, answered.
+        </h2>
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-slate-900">
+          Straight answers on hardware, installs, energy costs and uptime, for fleets of every size.
+        </p>
+
+        <div class="mt-10 max-w-md rounded-3xl bg-white p-7 sm:p-8">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-10 w-10 fill-lime-600/15 stroke-slate-900" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="1" width="22" height="22" rx="11" class="stroke-none"></rect>
+            <path d="M13 5.5 8 13h4l-1 5.5L16 11h-4l1-5.5Z" class="fill-none"></path>
+          </svg>
+          <h3 id="faq-cta-heading" class="mt-5 font-serif text-2xl font-medium leading-snug text-slate-900">
+            Planning a depot rollout?
+          </h3>
+          <p class="mt-3 leading-relaxed text-slate-900/75">
+            Tell us your fleet size and site address. A charging engineer will scope power, hardware and timeline with you.
+          </p>
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <a href="/contact/site-assessment"
+               class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-slate-900 px-6 text-base font-semibold text-white transition-colors hover:bg-slate-900/85 active:bg-slate-900/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+              Book a site assessment
+              <svg aria-hidden="true" viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"></path></svg>
+            </a>
+            <a href="mailto:fleet@acme.com"
+               class="inline-flex min-h-[48px] items-center justify-center rounded-full px-4 text-base font-medium text-slate-900 underline decoration-slate-900/30 underline-offset-4 transition-colors hover:decoration-slate-900 active:text-slate-900/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900">
+              fleet@acme.com
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: accordion -->
+      <div class="lg:col-span-7">
+        <ul class="flex flex-col gap-2" role="list">
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion" open>
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">What does Acme actually do?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  We plan, install and run charging for commercial fleets: depot chargers, on-route hubs and the software that ties them together. Our platform schedules every session around your routes and energy tariffs, so vehicles leave charged and your site stays within its power limits.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion">
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">Which vehicles and chargers do you support?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  Mixed fleets are the norm for us: vans, box trucks, buses and pool cars on CCS1, CCS2, NACS or Type 2 connectors. Our software works with any OCPP 1.6 or 2.0.1 compliant charger, so you can keep hardware you already own and add to it over time.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion">
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">How long does a depot installation take?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  A typical 20-vehicle depot runs 10 to 14 weeks from site survey to first charge. Most of that is utility approval, which we manage for you along with permits, civil works and commissioning. Sites with spare grid capacity can move considerably faster.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion">
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">Will smart charging lower our energy bill?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  That's what it's built for. Sessions shift into off-peak windows and site load is capped to avoid demand charges, while every vehicle still reaches its target state of charge before departure. You see the cost of each session per vehicle in your dashboard.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion">
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">What happens when a charger goes offline?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  Every port is monitored around the clock. Most faults are cleared with a remote reset, and the platform reroutes vehicles to free ports in the meantime. If a repair needs hands on site, a technician is dispatched within the response time set in your service plan.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion">
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">How is pricing structured?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  You can buy hardware outright and add a software subscription, or choose Charging-as-a-Service: one monthly fee per port that covers hardware, installation, software and maintenance, with no upfront capital outlay.
+                </p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="group rounded-3xl transition-colors open:bg-white hover:bg-white/25 open:hover:bg-white" name="faq-accordion">
+              <summary class="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-5 rounded-3xl px-5 py-6 sm:px-8 sm:py-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-900 [&::-webkit-details-marker]:hidden">
+                <h3 class="text-lg font-medium leading-snug text-slate-900 sm:text-xl">Can drivers charge at home or on the road?</h3>
+                <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-900 transition-transform duration-200 group-open:rotate-180">
+                  <svg viewBox="0 0 20 20" class="h-4 w-4 fill-none stroke-slate-900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 5 5 5-5"></path></svg>
+                </span>
+              </summary>
+              <div class="px-5 pb-7 sm:px-8 sm:pb-8">
+                <p class="max-w-prose leading-relaxed text-slate-900/75">
+                  Yes. Home sessions are metered and reimbursed automatically through the driver app, and public charging across major networks is billed to a single Acme card. Depot, home and public charging all land on one monthly invoice.
+                </p>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+</body>
+</html>

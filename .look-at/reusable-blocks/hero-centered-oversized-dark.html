@@ -1,0 +1,179 @@
+<!doctype html>
+<!-- Downloaded from Unsection Blocks (https://www.unsection.com/blocks). Tailwind CSS is loaded from the Play CDN for instant preview only; in production, use your project's own Tailwind CSS v3 build. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dark Centered Hero with Oversized Headline and Stat Row</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<section id="hero" aria-labelledby="hero-title" class="relative isolate overflow-hidden bg-neutral-950 font-sans text-neutral-50">
+  <!-- Image slot: swap for your own image (keep these size classes, add object-cover). -->
+  <div aria-hidden="true" class="absolute inset-0 -z-20 h-full w-full overflow-hidden bg-neutral-950">
+    <div class="absolute -bottom-40 -left-32 h-[34rem] w-[34rem] rounded-full border-[3rem] border-blue-600/25 blur-2xl"></div>
+    <div class="absolute -bottom-48 -right-24 h-[30rem] w-[30rem] rounded-full border-[3rem] border-fuchsia-600/20 blur-2xl"></div>
+    <div class="absolute bottom-10 right-[18%] h-48 w-48 rounded-full bg-amber-400/10 blur-3xl"></div>
+    <div class="absolute bottom-0 left-[12%] h-64 w-64 rounded-full bg-blue-600/15 blur-3xl"></div>
+  </div>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-1/3 bg-gradient-to-b from-neutral-950/80 to-transparent"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-[8%] -z-10 h-[55%] w-[85%] -translate-x-1/2 rounded-full bg-neutral-950/70 blur-3xl"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/4 bg-gradient-to-t from-neutral-950/90 to-transparent"></div>
+
+  <div class="mx-auto flex max-w-[90rem] flex-col items-center px-4 pb-14 pt-20 sm:px-6 sm:pt-24 lg:px-10 lg:pb-16 lg:pt-28">
+
+    <a href="/changelog/instant-payouts"
+       class="group inline-flex min-h-11 items-center gap-3 rounded-full border border-neutral-50/20 bg-neutral-950/70 py-1.5 pl-1.5 pr-4 text-sm text-neutral-50/80 backdrop-blur-md transition hover:border-neutral-50/30 hover:text-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-50 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950">
+      <span class="rounded-full bg-blue-600 px-2.5 py-1 font-mono text-[0.7rem] font-medium uppercase tracking-wider text-neutral-50">New</span>
+      <span>Instant debit-card payouts in 38 countries</span>
+      <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4 fill-none stroke-current transition-transform group-hover:translate-x-0.5" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <p class="mt-10 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-neutral-50/70 sm:text-sm">
+      <svg aria-hidden="true" viewBox="0 0 32 16" class="h-4 w-8 fill-none stroke-blue-400" stroke-width="2"><path d="M16 8c-3-4-5-6-8-6a6 6 0 0 0 0 12c3 0 5-2 8-6s5-6 8-6a6 6 0 0 1 0 12c-3 0-5-2-8-6Z"/></svg>
+      1 charge → 3 payouts
+    </p>
+
+    <h1 id="hero-title" class="mt-4 text-center font-sans text-[clamp(2.75rem,10.5vw,10.5rem)] font-semibold leading-[0.9] tracking-[-0.045em]">
+      <span class="block">One charge.</span>
+      <span class="block bg-gradient-to-r from-blue-400 via-pink-400 to-amber-400 bg-clip-text pb-[0.08em] text-transparent">Everyone paid.</span>
+    </h1>
+
+    <div class="mt-10 grid w-full items-center gap-8 lg:mt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,31rem)_minmax(0,1fr)] lg:gap-6 xl:gap-10">
+
+      <div class="order-first flex flex-col items-center text-center lg:order-none">
+        <p class="max-w-xl text-lg leading-relaxed text-neutral-50/80 sm:text-xl">
+          Acme is the payments API for marketplaces. Take the buyer's payment once, split it across sellers, couriers and your platform fee, and pay everyone out. Onboarding, tax forms and reconciliation are handled in the same flow.
+        </p>
+
+        <div class="mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
+          <a href="/signup"
+             class="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-600 px-7 text-base font-semibold text-neutral-50 shadow-lg shadow-blue-600/40 transition hover:bg-blue-600/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-50 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950">
+            Start building for free
+            <svg aria-hidden="true" viewBox="0 0 16 16" class="h-4 w-4 fill-none stroke-current transition-transform group-hover:translate-x-0.5" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/contact/sales"
+             class="inline-flex min-h-12 items-center justify-center rounded-full border border-neutral-50/25 bg-neutral-950/60 px-7 text-base font-semibold text-neutral-50 backdrop-blur-md transition hover:border-neutral-50/50 hover:bg-neutral-50/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-50 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950">
+            Talk to sales
+          </a>
+        </div>
+
+        <div class="mt-5 flex max-w-full items-center gap-3 rounded-full border border-neutral-50/10 bg-neutral-950/70 py-1.5 pl-4 pr-1.5 font-mono text-sm backdrop-blur-md">
+          <span aria-hidden="true" class="text-neutral-50/50">$</span>
+          <code id="hero-install" class="truncate text-neutral-50/90">npm i @acme/node</code>
+          <button type="button" id="hero-copy" aria-describedby="hero-copy-status"
+                  class="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-neutral-50/10 px-3.5 text-xs font-medium text-neutral-50 transition hover:bg-neutral-50/20 active:bg-neutral-50/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-50">
+            <svg data-icon="copy" aria-hidden="true" viewBox="0 0 16 16" class="h-3.5 w-3.5 fill-none stroke-current" stroke-width="1.5"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+            <svg data-icon="done" aria-hidden="true" viewBox="0 0 16 16" class="hidden h-3.5 w-3.5 fill-none stroke-emerald-400" stroke-width="2"><path d="M3 8.5l3 3 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-label>Copy</span>
+          </button>
+        </div>
+        <p id="hero-copy-status" role="status" class="sr-only"></p>
+      </div>
+
+      <div class="order-2 mx-auto w-full max-w-sm lg:order-first lg:mx-0 lg:max-w-[21rem] lg:justify-self-end">
+        <article aria-label="Example split payment" class="rounded-3xl border border-neutral-50/10 bg-neutral-950/80 p-5 shadow-2xl shadow-blue-600/25 backdrop-blur-xl transition-transform duration-500 lg:[transform:perspective(1200px)_rotateY(-22deg)_rotateX(6deg)] lg:hover:[transform:perspective(1200px)_rotateY(-8deg)_rotateX(2deg)]">
+          <div class="flex items-center justify-between gap-3">
+            <p class="font-mono text-xs text-neutral-50/60">split · ord_7Q4K</p>
+            <p class="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-medium text-emerald-400">
+              <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Settled
+            </p>
+          </div>
+          <p class="mt-4 font-sans text-4xl font-semibold tracking-tight">$240.00</p>
+          <p class="text-sm text-neutral-50/60">Buyer charge · Visa •• 4242</p>
+
+          <div aria-hidden="true" class="mt-5 flex h-2.5 overflow-hidden rounded-full bg-neutral-50/10">
+            <span class="w-[85%] bg-blue-600"></span>
+            <span class="w-[12%] bg-pink-400"></span>
+            <span class="w-[3%] bg-amber-400"></span>
+          </div>
+
+          <ul class="mt-5 space-y-3 text-sm">
+            <li class="flex items-center justify-between gap-3">
+              <span class="flex items-center gap-2.5"><span aria-hidden="true" class="h-2.5 w-2.5 rounded-sm bg-blue-600"></span>Northbound Ceramics</span>
+              <span class="font-mono text-neutral-50/90">85% · $204.00</span>
+            </li>
+            <li class="flex items-center justify-between gap-3">
+              <span class="flex items-center gap-2.5"><span aria-hidden="true" class="h-2.5 w-2.5 rounded-sm bg-pink-400"></span>Platform fee</span>
+              <span class="font-mono text-neutral-50/90">12% · $28.80</span>
+            </li>
+            <li class="flex items-center justify-between gap-3">
+              <span class="flex items-center gap-2.5"><span aria-hidden="true" class="h-2.5 w-2.5 rounded-sm bg-amber-400"></span>Courier</span>
+              <span class="font-mono text-neutral-50/90">3% · $7.20</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="order-3 mx-auto w-full max-w-sm lg:mx-0 lg:max-w-[21rem] lg:justify-self-start">
+        <article aria-label="Example payouts for today" class="rounded-3xl border border-neutral-50/10 bg-neutral-950/80 p-5 shadow-2xl shadow-pink-400/20 backdrop-blur-xl transition-transform duration-500 lg:[transform:perspective(1200px)_rotateY(22deg)_rotateX(6deg)] lg:hover:[transform:perspective(1200px)_rotateY(8deg)_rotateX(2deg)]">
+          <div class="flex items-center justify-between gap-3">
+            <p class="font-mono text-xs text-neutral-50/60">payouts · today</p>
+            <p class="font-mono text-xs text-neutral-50/60">3 of 1,284</p>
+          </div>
+
+          <ul class="mt-4 divide-y divide-neutral-50/10">
+            <li class="flex items-center gap-3 py-3">
+              <span aria-hidden="true" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600/20 text-xs font-semibold text-blue-200 ring-2 ring-blue-600/60">IO</span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-sm font-medium">Ines Okafor</p>
+                <p class="truncate text-xs text-neutral-50/60">Studio Ines · Lisbon</p>
+              </div>
+              <div class="text-right">
+                <p class="font-mono text-sm">$1,284.50</p>
+                <p class="text-xs font-medium text-blue-400">Instant</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-3 py-3">
+              <span aria-hidden="true" class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-xs font-semibold text-amber-200 ring-2 ring-amber-400/60">MV</span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-sm font-medium">Marco Velez</p>
+                <p class="truncate text-xs text-neutral-50/60">Velez Bikes · Austin</p>
+              </div>
+              <div class="text-right">
+                <p class="font-mono text-sm">$642.10</p>
+                <p class="text-xs font-medium text-amber-400">Tomorrow 09:00</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-3 py-3">
+              <span aria-hidden="true" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pink-400/15 text-pink-400 ring-2 ring-pink-400/50">
+                <svg viewBox="0 0 20 20" class="h-5 w-5 fill-none stroke-current" stroke-width="1.6"><circle cx="5" cy="14" r="3"/><circle cx="15" cy="14" r="3"/><path d="M5 14l4-7h4l2 7M9 7H7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-sm font-medium">Courier pool</p>
+                <p class="truncate text-xs text-neutral-50/60">214 riders · batched</p>
+              </div>
+              <div class="text-right">
+                <p class="font-mono text-sm">$3,920.40</p>
+                <p class="text-xs font-medium text-emerald-400">Sent</p>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <dl class="mt-14 grid w-full max-w-5xl overflow-hidden rounded-3xl border border-neutral-50/10 bg-neutral-950/75 backdrop-blur-xl sm:grid-cols-3 lg:mt-20">
+      <div class="flex flex-col-reverse gap-2 border-b border-neutral-50/10 p-6 sm:border-b-0 sm:border-r lg:p-8">
+        <dt class="text-sm leading-snug text-neutral-50/70">Paid out to marketplace sellers in 2025</dt>
+        <dd class="flex items-center gap-3 font-sans text-[clamp(2.25rem,4.5vw,3.5rem)] font-semibold leading-none tracking-tight">
+          <span aria-hidden="true" class="h-3 w-3 rounded-full bg-blue-600"></span>$14B
+        </dd>
+      </div>
+      <div class="flex flex-col-reverse gap-2 border-b border-neutral-50/10 p-6 sm:border-b-0 sm:border-r lg:p-8">
+        <dt class="text-sm leading-snug text-neutral-50/70">API uptime over the last 12 months</dt>
+        <dd class="flex items-center gap-3 font-sans text-[clamp(2.25rem,4.5vw,3.5rem)] font-semibold leading-none tracking-tight">
+          <span aria-hidden="true" class="h-3 w-3 rounded-full bg-pink-400"></span>99.995%
+        </dd>
+      </div>
+      <div class="flex flex-col-reverse gap-2 p-6 lg:p-8">
+        <dt class="text-sm leading-snug text-neutral-50/70">Countries with local payout rails</dt>
+        <dd class="flex items-center gap-3 font-sans text-[clamp(2.25rem,4.5vw,3.5rem)] font-semibold leading-none tracking-tight">
+          <span aria-hidden="true" class="h-3 w-3 rounded-full bg-amber-400"></span>46
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+</body>
+</html>
